@@ -344,7 +344,9 @@ const cursor = value.cursor;
 const next_value = await NAMESPACE.list({ cursor: cursor });
 ```
 
-Note that checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch; check `list_complete` instead. The reason it is possible to have an empty array in `keys`, but still have more keys to fetch, is because [recently expired or deleted keys](https://en.wikipedia.org/wiki/Tombstone_%28data_store%29) must be iterated through but will not be included in the returned `keys`.
+Note that checking for an empty array in `keys` is not sufficient to determine whether there are more keys to fetch; check `list_complete` instead. The reason it is possible to have an empty array in `keys`, but still have more keys to fetch, is because [recently expired or deleted keys](https://en.wikipedia.org/wiki/Tombstone_%28data_store%29) must be iterated through but will not be included in the returned `keys`. 
+
+Additionally, if you are using the `prefix` key to filter your results, you will need to include this key in subsequent calls to `list` along with `cursor` to ensure you continue to receive only those results that match the prefix.
 
 ## KV bindings
 
